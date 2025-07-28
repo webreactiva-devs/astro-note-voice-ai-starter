@@ -1,0 +1,20 @@
+---
+import { auth } from "../lib/auth";
+
+// Manejar el logout en el servidor
+const session = await auth.api.getSession({
+  headers: Astro.request.headers,
+});
+
+if (session) {
+  // Cerrar sesión
+  const response = await auth.api.signOut({
+    headers: Astro.request.headers,
+  });
+
+  Astro.response.headers.append('Set-Cookie', 'session=; Path=/; HttpOnly; Max-Age=0');
+}
+
+// Redirigir al login
+return Astro.redirect("/login");
+---

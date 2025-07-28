@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/main.astro";
+import { LoginForm } from "../components/LoginForm";
+import { Toaster } from "../components/ui/sonner";
+
+// Si el usuario ya está autenticado, redirigir al dashboard
+const session = Astro.locals.session;
+if (session) {
+  return Astro.redirect("/dashboard");
+}
+---
+
+<Layout content={{ title: "Iniciar Sesión" }}>
+  <div class="min-h-screen flex items-center justify-center bg-background p-4">
+    <LoginForm client:load />
+  </div>
+  <Toaster client:load />
+</Layout>

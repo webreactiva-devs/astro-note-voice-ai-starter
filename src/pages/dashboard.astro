@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/main.astro";
+import { DashboardContent } from "../components/DashboardContent";
+import { Toaster } from "../components/ui/sonner";
+
+// Si el usuario no está autenticado, redirigir al login
+const session = Astro.locals.session;
+if (!session) {
+  return Astro.redirect("/login");
+}
+---
+
+<Layout content={{ title: "Dashboard" }}>
+  <div class="min-h-screen bg-background">
+    <div class="container mx-auto px-4 py-8">
+      <DashboardContent client:load />
+    </div>
+  </div>
+  <Toaster client:load />
+</Layout>
