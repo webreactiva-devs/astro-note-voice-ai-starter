@@ -2,6 +2,14 @@
 
 > Versión de la plantilla sin la Autenticación generada. Sigue la propuesta del reto para crearla.
 
+Descarga esta rama directamente:
+````
+git clone \
+  --single-branch \
+  --branch start-without-auth \
+  https://github.com/webreactiva-devs/astro-note-voice-ai-starter.git
+````
+
 **Astro Note Voice AI Starter** es un template base para crear aplicaciones modernas de notas con inteligencia artificial y reconocimiento de voz. Este proyecto utiliza **Astro**, **React**, **Turso** y **shadcn/ui** como base tecnológica.
 
 Este starter es tu punto de partida para el **reto Estrategas de la IA** en la comunidad de suscriptores de **[Web Reactiva](https://webreactiva.com)**, donde aprenderás a integrar tecnologías modernas para construir aplicaciones web potentes y escalables.
