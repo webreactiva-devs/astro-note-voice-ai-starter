@@ -4,6 +4,8 @@
 
 Este starter es lo que aprendemos a crear en el **reto Estrategas de la IA** en la comunidad de suscriptores de **[Web Reactiva](https://webreactiva.com)**, donde exploramos cómo integrar tecnologías modernas para construir aplicaciones web potentes y escalables.
 
+> Tienes la versión sin autenticación en la rama ["start-without-auth"](https://github.com/webreactiva-devs/astro-note-voice-ai-starter/tree/start-without-auth)
+
 > 💡 **Nota sobre los commits**: En el historial del proyecto verás commits marcados como `(manual)` para código escrito por humanos y `(AI {model})` para código generado por inteligencia artificial, lo que te permite aprender de ambos enfoques. [Ver commits en el repositorio remoto](https://github.com/webreactiva-devs/astro-note-voice-ai-starter/commits/main/)
 
 ## ✨ Características
