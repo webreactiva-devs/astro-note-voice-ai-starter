@@ -1,6 +1,10 @@
-# 🎙️ Astro Note Voice AI
+# 🎙️ Astro Note Voice AI Starter
 
-Una aplicación moderna de notas con inteligencia artificial y reconocimiento de voz, construida con **Astro**, **React**, **Better Auth**, **Turso** y **shadcn/ui**.
+**Astro Note Voice AI Starter** es un template completo para crear aplicaciones modernas de notas con inteligencia artificial y reconocimiento de voz. Este proyecto utiliza **Astro**, **React**, **Better Auth**, **Turso** y **shadcn/ui** como base tecnológica.
+
+Este starter es lo que aprendemos a crear en el **reto Estrategas de la IA** en la comunidad de suscriptores de **[Web Reactiva](https://webreactiva.com)**, donde exploramos cómo integrar tecnologías modernas para construir aplicaciones web potentes y escalables.
+
+> 💡 **Nota sobre los commits**: En el historial del proyecto verás commits marcados como `(manual)` para código escrito por humanos y `(AI {model})` para código generado por inteligencia artificial, lo que te permite aprender de ambos enfoques. [Ver commits en el repositorio remoto](https://github.com/webreactiva-devs/astro-note-voice-ai-starter/commits/main/)
 
 ## ✨ Características
 
@@ -14,20 +18,22 @@ Una aplicación moderna de notas con inteligencia artificial y reconocimiento de
 
 ## 🛠️ Stack Tecnológico
 
-- **Frontend**: Astro + React + TypeScript
-- **Styling**: Tailwind CSS + shadcn/ui
-- **Autenticación**: Better Auth
-- **Base de datos**: Turso (LibSQL)
-- **ORM**: Kysely
-- **Notificaciones**: Sonner
+- **Runtime**: [Node.js](https://nodejs.org/) - v18.20.8, v20.3.0, v22.0.0 o superior *(v19 y v21 no son compatibles)*
+- **Framework**: [Astro](https://astro.build/) - Generador de sitios web moderno
+- **Frontend**: [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- **Autenticación**: [Better Auth](https://better-auth.com/) - Autenticación moderna para aplicaciones web
+- **Base de datos**: [Turso](https://turso.tech/) - Base de datos SQLite distribuida
+- **Query Builder**: [Kysely](https://kysely.dev/) - Constructor de consultas SQL type-safe
+- **Notificaciones**: [Sonner](https://sonner.emilkowal.ski/) - Biblioteca de toast notifications
 
 ## 🚀 Configuración Inicial
 
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <url-del-repositorio>
-cd astro-note-voice-ai
+git clone https://github.com/webreactiva-devs/astro-note-voice-ai-starter.git
+cd astro-note-voice-ai-starter
 ```
 
 ### 2. Instalar dependencias
@@ -41,15 +47,15 @@ npm install
 1. **Crear cuenta en [Turso](https://turso.tech)**
 2. **Crear una nueva base de datos**:
    ```bash
-   turso db create astro-note-voice-ai
+   turso db create tu-proyecto-notes
    ```
 3. **Obtener la URL de conexión**:
    ```bash
-   turso db show astro-note-voice-ai
+   turso db show tu-proyecto-notes
    ```
 4. **Crear token de autenticación**:
    ```bash
-   turso db tokens create astro-note-voice-ai
+   turso db tokens create tu-proyecto-notes
    ```
 
 ### 4. Configurar variables de entorno
@@ -90,7 +96,7 @@ npm run dev
 ## 📁 Estructura del Proyecto
 
 ```
-📦 astro-note-voice-ai/
+📦 astro-note-voice-ai-starter/
 ├── 📂 src/
 │   ├── 📂 components/           # Componentes React
 │   │   ├── 📂 ui/              # Componentes shadcn/ui
