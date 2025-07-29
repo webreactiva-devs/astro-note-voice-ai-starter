@@ -1,7 +1,29 @@
 {
-  "name": "astro-note-voice-ai",
+  "name": "astro-note-voice-ai-starter",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Template completo para crear aplicaciones modernas de notas con inteligencia artificial y reconocimiento de voz. Proyecto del reto Estrategas de la IA en la comunidad de Web Reactiva.",
+  "author": "Web Reactiva <info@danielprimo.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webreactiva-devs/astro-note-voice-ai-starter.git"
+  },
+  "keywords": [
+    "astro",
+    "react",
+    "typescript",
+    "better-auth",
+    "turso",
+    "shadcn-ui",
+    "tailwindcss",
+    "voice-ai",
+    "notes-app",
+    "starter",
+    "template",
+    "web-reactiva",
+    "estrategas-ia"
+  ],
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
