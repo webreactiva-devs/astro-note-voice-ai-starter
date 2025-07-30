@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly PUBLIC_BETTER_AUTH_URL: string;
   readonly TURSO_DATABASE_URL: string;
   readonly TURSO_AUTH_TOKEN: string;
+  readonly GROQ_API_KEY: string;
 }
 
 interface ImportMeta {

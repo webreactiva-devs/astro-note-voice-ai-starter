@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mic, Square, Pause, Download } from "lucide-react";
+import { Mic, Square, Pause, Download, MessageSquare } from "lucide-react";
 import { WaveformVisualizer } from "./WaveformVisualizer";
 import { AudioPlayer } from "./AudioPlayer";
 import { TimerDisplay } from "./TimerDisplay";
+import { TranscriptionModal } from "./TranscriptionModal";
 
 type RecordingState = "idle" | "recording" | "paused" | "stopped";
 
@@ -13,6 +14,12 @@ export function VoiceRecorder() {
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutos en segundos
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  
+  // Transcription states
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const [transcription, setTranscription] = useState("");
+  const [showTranscriptionModal, setShowTranscriptionModal] = useState(false);
+  const [isSavingNote, setIsSavingNote] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -148,11 +155,72 @@ export function VoiceRecorder() {
     }
   };
 
+  // Transcribe audio
+  const transcribeAudio = async () => {
+    if (!audioBlob) return;
+
+    setIsTranscribing(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("audio", audioBlob, "recording.webm");
+
+      const response = await fetch("/api/transcribe", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Error en la transcripción");
+      }
+
+      const data = await response.json();
+      setTranscription(data.transcription || "");
+      setShowTranscriptionModal(true);
+    } catch (error) {
+      console.error("Error transcribing audio:", error);
+      alert(
+        error instanceof Error
+          ? `Error al transcribir: ${error.message}`
+          : "Error desconocido al transcribir el audio"
+      );
+    } finally {
+      setIsTranscribing(false);
+    }
+  };
+
+  // Save note (placeholder for future implementation)
+  const saveNote = async (editedText: string) => {
+    setIsSavingNote(true);
+    
+    try {
+      // TODO: Implement /api/notes endpoint
+      console.log("Saving note:", editedText);
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      alert("Nota guardada exitosamente! (funcionalidad simulada)");
+      setShowTranscriptionModal(false);
+      
+      // Optionally start a new recording
+      newRecording();
+    } catch (error) {
+      console.error("Error saving note:", error);
+      alert("Error al guardar la nota");
+    } finally {
+      setIsSavingNote(false);
+    }
+  };
+
   // Start new recording
   const newRecording = () => {
     setState("idle");
     setTimeLeft(120);
     setAudioBlob(null);
+    setTranscription("");
+    setShowTranscriptionModal(false);
     if (audioUrl) {
       URL.revokeObjectURL(audioUrl);
       setAudioUrl(null);
@@ -254,14 +322,22 @@ export function VoiceRecorder() {
                 Descargar
               </Button>
               <Button
-                onClick={() => {
-                  // TODO: Implement transcription
-                  alert("Función de transcripción próximamente...");
-                }}
+                onClick={transcribeAudio}
+                disabled={isTranscribing}
                 size="lg"
-                className="bg-blue-500 hover:bg-blue-600 text-white"
+                className="bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-50"
               >
-                Transcribir
+                {isTranscribing ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                    Transcribiendo...
+                  </>
+                ) : (
+                  <>
+                    <MessageSquare className="mr-2 h-5 w-5" />
+                    Transcribir
+                  </>
+                )}
               </Button>
             </div>
 
@@ -274,6 +350,15 @@ export function VoiceRecorder() {
           </div>
         )}
       </CardContent>
+
+      {/* Transcription Modal */}
+      <TranscriptionModal
+        isOpen={showTranscriptionModal}
+        transcription={transcription}
+        onClose={() => setShowTranscriptionModal(false)}
+        onSave={saveNote}
+        isLoading={isSavingNote}
+      />
     </Card>
   );
 }
