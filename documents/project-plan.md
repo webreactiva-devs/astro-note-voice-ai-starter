@@ -26,15 +26,15 @@ Esta aplicación web permite a usuarios grabar notas de voz, transcribirlas auto
 - [x] Almacenar audio en memoria temporalmente
 
 ### 4. Transcripción
-- [ ] Permitir reproducción y descarga del audio grabado
-- [ ] Crear endpoint POST `/api/transcribe`
-  - [ ] Recibir FormData con audio
-  - [ ] Enviar audio a Groq y devolver texto
-- [ ] Mostrar estado de carga durante la transcripción
-- [ ] Mostrar resultado en modal editable
+- [x] Permitir reproducción y descarga del audio grabado
+- [x] Crear endpoint POST `/api/transcribe`
+  - [x] Recibir FormData con audio
+  - [x] Enviar audio a Groq y devolver texto
+- [x] Mostrar estado de carga durante la transcripción
+- [x] Mostrar resultado en modal editable
 
 ### 5. Edición y guardado de nota
-- [ ] Habilitar edición del texto transcrito en modal
+- [x] Habilitar edición del texto transcrito en modal
 - [ ] Crear endpoint POST `/api/notes`
   - [ ] Enviar texto final a Groq para título y tags
   - [ ] Guardar nota en la tabla `notes`
@@ -51,7 +51,7 @@ Esta aplicación web permite a usuarios grabar notas de voz, transcribirlas auto
 - [ ] Crear endpoint GET `/api/notes`
   - [ ] Soportar parámetros `?q=`, `?tag=`
   - [ ] Devolver notas del usuario autenticado
-- [ ] Validar acceso autenticado en todos los endpoints
+- [x] Validar acceso autenticado en todos los endpoints
 
 ### 8. Base de datos
 - [ ] Crear tabla `notes` con los campos especificados
@@ -72,10 +72,20 @@ Esta aplicación web permite a usuarios grabar notas de voz, transcribirlas auto
 
 ## Preguntas clave a responder
 
-- ¿Cómo se puede limitar correctamente el tiempo de grabación y detenerla automáticamente al llegar a los 2 minutos?
-- ¿La autenticación Better-Auth permite roles o claims necesarios para asociar notas a usuarios?
-- ¿Groq tiene límite de tamaño o formato específico en archivos de audio recibidos?
-- ¿Es necesario normalizar los tags para facilitar el filtrado posterior?
-- ¿Cómo manejar el almacenamiento de notas si se superan los límites del plan gratuito de Turso?
-- ¿Qué fallback hay si la API de Groq no responde o devuelve un error inesperado?
-- ¿Cómo asegurar que el endpoint de transcripción no guarde el audio y que se procese solo en memoria?
+- ✅ **¿Cómo se puede limitar correctamente el tiempo de grabación y detenerla automáticamente al llegar a los 2 minutos?**
+  *Respuesta: Implementado con `setInterval` y `clearInterval`, auto-stop en `timeLeft <= 1`*
+
+- ✅ **¿La autenticación Better-Auth permite roles o claims necesarios para asociar notas a usuarios?**
+  *Respuesta: Sí, Better-Auth provee `session.user.id` para asociar notas a usuarios*
+
+- ✅ **¿Groq tiene límite de tamaño o formato específico en archivos de audio recibidos?**
+  *Respuesta: Soporta múltiples formatos (WebM, WAV, MP3, etc.), límite 10MB implementado*
+
+- ✅ **¿Qué fallback hay si la API de Groq no responde o devuelve un error inesperado?**
+  *Respuesta: Manejo completo de errores con try/catch y mensajes informativos al usuario*
+
+- ✅ **¿Cómo asegurar que el endpoint de transcripción no guarde el audio y que se procese solo en memoria?**
+  *Respuesta: Audio se procesa directamente desde FormData a Groq API, sin almacenamiento en servidor*
+
+- [ ] ¿Es necesario normalizar los tags para facilitar el filtrado posterior?
+- [ ] ¿Cómo manejar el almacenamiento de notas si se superan los límites del plan gratuito de Turso?
