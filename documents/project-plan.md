@@ -7,23 +7,23 @@ Esta aplicación web permite a usuarios grabar notas de voz, transcribirlas auto
 ## Todo items
 
 ### 1. Setup inicial
-- [ ] Inicializar proyecto con Astro y TypeScript
-- [ ] Configurar Tailwind CSS
-- [ ] Integrar shadcn/ui para los componentes
-- [ ] Configurar entorno local y de desarrollo con SQLite (Turso)
-- [ ] Añadir variables de entorno para claves de API (Groq, Turso, auth)
+- [x] Inicializar proyecto con Astro y TypeScript
+- [x] Configurar Tailwind CSS
+- [x] Integrar shadcn/ui para los componentes
+- [x] Configurar entorno local y de desarrollo con SQLite (Turso)
+- [x] Añadir variables de entorno para claves de API (Groq, Turso, auth)
 
 ### 2. Autenticación
-- [ ] Instalar e integrar Better-Auth (o equivalente)
-- [ ] Configurar autenticación por email
-- [ ] Proteger rutas privadas (grabación, dashboard, API)
+- [x] Instalar e integrar Better-Auth (o equivalente)
+- [x] Configurar autenticación por email
+- [x] Proteger rutas privadas (grabación, dashboard, API)
 
 ### 3. Pantalla de grabación
-- [ ] Crear página de grabación accesible tras login
-- [ ] Implementar botón de grabar, pausar y parar
-- [ ] Implementar contador de 2 minutos en cuenta atrás
-- [ ] Mostrar visualizador de onda en tiempo real
-- [ ] Almacenar audio en memoria temporalmente
+- [x] Crear página de grabación accesible tras login
+- [x] Implementar botón de grabar, pausar y parar
+- [x] Implementar contador de 2 minutos en cuenta atrás
+- [x] Mostrar visualizador de onda en tiempo real
+- [x] Almacenar audio en memoria temporalmente
 
 ### 4. Transcripción
 - [ ] Permitir reproducción y descarga del audio grabado
@@ -41,7 +41,7 @@ Esta aplicación web permite a usuarios grabar notas de voz, transcribirlas auto
 - [ ] Mostrar feedback visual al usuario
 
 ### 6. Dashboard de notas
-- [ ] Crear página de dashboard con listado de notas del usuario
+- [x] Crear página de dashboard con listado de notas del usuario
 - [ ] Ordenar notas por fecha descendente
 - [ ] Implementar buscador por título
 - [ ] Implementar filtro por fecha
@@ -55,7 +55,7 @@ Esta aplicación web permite a usuarios grabar notas de voz, transcribirlas auto
 
 ### 8. Base de datos
 - [ ] Crear tabla `notes` con los campos especificados
-- [ ] Integrar con Turso y conectar desde Astro API
+- [x] Integrar con Turso y conectar desde Astro API
 - [ ] Añadir migraciones si se usan herramientas auxiliares
 
 ### 9. Testing y feedback
