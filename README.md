@@ -17,6 +17,53 @@ Este starter es lo que aprendemos a crear en el **reto Estrategas de la IA** en 
 - 🔄 **Middleware de sesiones** integrado
 - 📱 **Diseño responsivo** y accesible
 - 🚀 **Rendimiento optimizado** con Astro
+- 🧪 **Testing completo** con Vitest, Testing Library y MSW
+- 📊 **Cobertura de tests** del 80%+ en todas las funcionalidades
+- 🎤 **Transcripción de audio** con Groq API y Whisper
+
+## 🗺️ Roadmap del Proyecto
+
+### ✅ **Completado**
+
+- **🔐 Autenticación**: Sistema completo con Better Auth (registro, login, sesiones)
+- **🎨 UI/UX**: Interface moderna con shadcn/ui y Tailwind CSS responsivo
+- **🎤 Grabación de Audio**: Componentes React con visualizador de ondas y timer
+- **🔊 Transcripción**: API completa con Groq/Whisper + servicio reutilizable
+- **🧪 Testing**: 51 tests con 80%+ cobertura (Vitest + Testing Library + MSW)
+- **🛠️ Herramientas**: Script CLI para transcripción local de archivos
+- **📚 Documentación**: Guías completas de desarrollo y testing
+
+### 🚧 **En Desarrollo**
+
+- **💾 Gestión de Notas**: CRUD completo con metadatos generados por IA
+- **📊 Dashboard Avanzado**: Filtros por fecha, tags y búsqueda inteligente
+- **🏷️ Sistema de Tags**: Generación automática y normalización
+
+### 📋 **Planificado**
+
+- **🔍 Búsqueda Avanzada**: Filtros combinados y búsqueda semántica
+- **📱 PWA**: Funcionalidades de aplicación nativa
+- **🌐 Deployment**: Configuración para producción y CI/CD
+- **⚡ Optimizaciones**: Performance y experiencia de usuario
+
+> 📖 **Plan detallado**: Ver [`documents/project-plan.md`](./documents/project-plan.md) para información completa de cada funcionalidad, incluyendo tasks específicas, tests implementados y preguntas técnicas resueltas.
+
+### 📊 **Estado Actual**
+
+```
+Progreso General: ████████████████████████░░░░ 75%
+
+✅ Funcionalidades Core Implementadas:
+   • Autenticación con Better Auth
+   • Grabación de audio (2 min límite)
+   • Transcripción con Groq API
+   • Testing robusto (51 tests)
+   • Herramientas CLI
+
+🧪 Coverage de Tests: 80%+ en módulos core
+🔧 Comandos disponibles: 12 scripts npm
+📁 Estructura: 6 test suites, 51 tests total
+```
 
 ## 🛠️ Stack Tecnológico
 
@@ -27,6 +74,7 @@ Este starter es lo que aprendemos a crear en el **reto Estrategas de la IA** en 
 - **Autenticación**: [Better Auth](https://better-auth.com/) - Autenticación moderna para aplicaciones web
 - **Base de datos**: [Turso](https://turso.tech/) - Base de datos SQLite distribuida
 - **Query Builder**: [Kysely](https://kysely.dev/) - Constructor de consultas SQL type-safe
+- **Testing**: [Vitest](https://vitest.dev/) + [@testing-library/react](https://testing-library.com/) + [MSW](https://mswjs.io/)
 - **Notificaciones**: [Sonner](https://sonner.emilkowal.ski/) - Biblioteca de toast notifications
 
 ## 🚀 Configuración Inicial
@@ -189,6 +237,157 @@ if (!user) {
 ---
 ```
 
+## 🧪 Testing
+
+### Stack de Testing
+
+El proyecto utiliza un stack de testing moderno y completo:
+
+- **[Vitest](https://vitest.dev/)**: Test runner rápido y nativo de Vite
+- **[@testing-library/react](https://testing-library.com/)**: Utilities para testing de componentes React
+- **[MSW (Mock Service Worker)](https://mswjs.io/)**: Mocking de APIs para tests de integración
+- **[jsdom](https://github.com/jsdom/jsdom)**: Entorno DOM para simulación de navegador
+
+### Comandos de Testing
+
+```bash
+# Desarrollo con tests
+npm test                # Ejecutar tests en modo watch
+npm run test:run        # Ejecutar todos los tests una vez
+npm run test:ui         # Interface gráfica de Vitest
+npm run test:coverage   # Generar reporte de cobertura
+```
+
+### Estructura de Tests
+
+```
+tests/
+├── setup.ts                    # Configuración global de tests
+├── mocks/
+│   ├── handlers.ts             # Handlers de MSW para APIs
+│   └── server.ts              # Servidor MSW
+├── unit/                      # Tests unitarios
+│   ├── components/            # Tests de componentes React
+│   └── lib/                   # Tests de servicios y utilidades
+└── integration/               # Tests de integración
+    └── api/                   # Tests de API routes
+```
+
+### Ejemplos de Tests
+
+#### Test de Componente React
+
+```tsx
+// tests/unit/components/TimerDisplay.test.tsx
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { TimerDisplay } from '@/components/TimerDisplay';
+
+describe('TimerDisplay', () => {
+  it('displays formatted time correctly', () => {
+    render(<TimerDisplay seconds={75} />);
+    expect(screen.getByText('01:15')).toBeInTheDocument();
+  });
+
+  it('shows recording indicator when recording', () => {
+    render(<TimerDisplay seconds={30} isRecording={true} />);
+    expect(screen.getByTestId('recording-indicator')).toBeInTheDocument();
+  });
+});
+```
+
+#### Test de Servicio/Librería
+
+```typescript
+// tests/unit/lib/transcription.test.ts
+import { describe, it, expect, vi } from 'vitest';
+import { transcribeAudio, validateAudioFile } from '@/lib/transcription';
+
+describe('Transcription Service', () => {
+  describe('validateAudioFile', () => {
+    it('accepts valid audio file', () => {
+      const file = new File([''], 'test.webm', { type: 'audio/webm' });
+      const result = validateAudioFile(file);
+      expect(result.valid).toBe(true);
+    });
+
+    it('rejects files that are too large', () => {
+      const largeFile = new File(['x'.repeat(11 * 1024 * 1024)], 'large.wav', 
+        { type: 'audio/wav' });
+      const result = validateAudioFile(largeFile);
+      expect(result.valid).toBe(false);
+      expect(result.error).toContain('demasiado grande');
+    });
+  });
+});
+```
+
+#### Test de API Route (Integración)
+
+```typescript
+// tests/integration/api/transcribe.test.ts
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { server } from '../../mocks/server';
+
+describe('/api/transcribe', () => {
+  beforeAll(() => server.listen());
+  afterAll(() => server.close());
+
+  it('transcribes audio file successfully', async () => {
+    const formData = new FormData();
+    const audioFile = new File(['fake audio'], 'test.webm', 
+      { type: 'audio/webm' });
+    formData.append('audio', audioFile);
+
+    const response = await fetch('/api/transcribe', {
+      method: 'POST',
+      body: formData,
+    });
+
+    expect(response.ok).toBe(true);
+    const data = await response.json();
+    expect(data.transcription).toBeDefined();
+  });
+});
+```
+
+### Cobertura de Tests
+
+El proyecto mantiene un **mínimo del 80% de cobertura** en todas las funcionalidades:
+
+```bash
+# Verificar cobertura actual
+npm run test:coverage
+
+# Ejemplo de output esperado:
+# ✓ Statements: 85.2% (145/170)
+# ✓ Branches: 82.1% (23/28)  
+# ✓ Functions: 88.9% (16/18)
+# ✓ Lines: 84.7% (138/163)
+```
+
+### Test-Driven Development (TDD)
+
+**Cada nueva funcionalidad sigue el ciclo TDD:**
+
+1. 🔴 **Red**: Escribir test que falle
+2. 🟢 **Green**: Implementar código mínimo
+3. 🔄 **Refactor**: Mejorar manteniendo tests verdes
+4. 📊 **Coverage**: Verificar >= 80% cobertura
+
+### Debugging Tests
+
+```bash
+# Ejecutar test específico
+npm test -- TimerDisplay.test.tsx
+
+# Modo debug con breakpoints
+npm test -- --inspect-brk
+
+# Ver output detallado
+npm test -- --reporter=verbose
+```
+
 ## 🎨 Personalización
 
 ### Añadir Nuevos Componentes shadcn/ui
@@ -235,10 +434,60 @@ npm run preview         # Preview del build
 npx @better-auth/cli generate    # Generar esquema
 npx @better-auth/cli migrate     # Aplicar migraciones
 
+# Testing
+npm test                # Ejecutar tests en modo watch
+npm run test:run        # Ejecutar todos los tests una vez
+npm run test:coverage   # Ejecutar tests con coverage
+
+# Transcripción de Audio
+npm run transcribe <archivo>     # Transcribir archivo de audio local
+npm run transcribe:help          # Ver ayuda de transcripción
+npm run test:transcription       # Script de prueba de transcripción
+
 # Utilidades
 npx @better-auth/cli secret      # Generar clave secreta
 npx shadcn@latest add [comp]     # Añadir componente UI
 ```
+
+## 🎤 Transcripción de Audio Local
+
+El proyecto incluye un script completo para transcribir archivos de audio locales usando la misma lógica que la aplicación web.
+
+### Configuración Rápida
+
+1. **Configurar API Key de Groq**:
+   ```bash
+   export GROQ_API_KEY="tu-api-key-de-groq"
+   ```
+
+2. **Transcribir un archivo**:
+   ```bash
+   npm run transcribe ./path/to/audio.wav
+   ```
+
+### Ejemplos de Uso
+
+```bash
+# Transcripción básica
+npm run transcribe ./examples/audio.wav
+
+# Con información detallada
+npm run transcribe ./examples/audio.mp3 -- --verbose
+
+# Especificar idioma y guardar resultado
+npm run transcribe ./examples/meeting.webm -- \
+  --language en \
+  --output ./transcriptions/meeting.txt
+
+# Ver todas las opciones disponibles
+npm run transcribe:help
+```
+
+### Formatos Soportados
+- WebM, WAV, MP3, MPEG, MP4, M4A, OGG, FLAC
+- Tamaño máximo: 10MB por archivo
+
+📖 **Documentación completa**: Ver [`documents/local-transcription.md`](./documents/local-transcription.md)
 
 ## 🔧 Solución de Problemas
 
