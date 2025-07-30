@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/main.astro";
+import { VoiceRecorder } from "../components/VoiceRecorder";
+import { Toaster } from "../components/ui/sonner";
+
+// Si el usuario no está autenticado, redirigir al login
+const session = Astro.locals.session;
+if (!session) {
+  return Astro.redirect("/login");
+}
+---
+
+<Layout content={{ title: "Grabar Nota de Voz" }}>
+  <div class="min-h-screen bg-background">
+    <div class="container mx-auto px-4 py-8">
+      <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-8">Grabar Nota de Voz</h1>
+        <VoiceRecorder client:load />
+      </div>
+    </div>
+  </div>
+  <Toaster client:load />
+</Layout>

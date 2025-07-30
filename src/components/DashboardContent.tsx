@@ -2,9 +2,15 @@
 
 import { authClient } from "../lib/auth-client";
 import { Button } from "../components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
-import { LogOut, User, Mail, Calendar, Shield } from "lucide-react";
+import { LogOut, User, Mail, Calendar, Shield, Mic } from "lucide-react";
 import { toast } from "sonner";
 
 export function DashboardContent() {
@@ -66,10 +72,18 @@ export function DashboardContent() {
             Bienvenido de vuelta, {user.name}
           </p>
         </div>
-        <Button onClick={handleLogout} variant="outline" size="sm">
-          <LogOut className="w-4 h-4 mr-2" />
-          Cerrar Sesión
-        </Button>
+        <div className="flex gap-2">
+          <Button asChild size="sm">
+            <a href="/record">
+              <Mic className="w-4 h-4 mr-2" />
+              Nueva Grabación
+            </a>
+          </Button>
+          <Button onClick={handleLogout} variant="outline" size="sm">
+            <LogOut className="w-4 h-4 mr-2" />
+            Cerrar Sesión
+          </Button>
+        </div>
       </div>
 
       {/* User Info Card */}
@@ -105,12 +119,16 @@ export function DashboardContent() {
               <div className="flex items-center gap-2 text-sm">
                 <Calendar className="w-4 h-4 text-muted-foreground" />
                 <span className="font-medium">Creado:</span>
-                <span>{new Date(user.createdAt).toLocaleDateString('es-ES')}</span>
+                <span>
+                  {new Date(user.createdAt).toLocaleDateString("es-ES")}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Calendar className="w-4 h-4 text-muted-foreground" />
                 <span className="font-medium">Actualizado:</span>
-                <span>{new Date(user.updatedAt).toLocaleDateString('es-ES')}</span>
+                <span>
+                  {new Date(user.updatedAt).toLocaleDateString("es-ES")}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <span className="font-medium">ID:</span>
@@ -128,9 +146,7 @@ export function DashboardContent() {
                 />
                 <div>
                   <p className="font-medium">Imagen de perfil</p>
-                  <p className="text-sm text-muted-foreground">
-                    {user.image}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{user.image}</p>
                 </div>
               </div>
             </div>
@@ -147,18 +163,22 @@ export function DashboardContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
               <span className="font-medium">ID de sesión:</span>
-              <code className="ml-2 text-xs bg-muted px-1 rounded">{session.session.id}</code>
+              <code className="ml-2 text-xs bg-muted px-1 rounded">
+                {session.session.id}
+              </code>
             </div>
             <div>
               <span className="font-medium">Expira:</span>
               <span className="ml-2">
-                {new Date(session.session.expiresAt).toLocaleString('es-ES')}
+                {new Date(session.session.expiresAt).toLocaleString("es-ES")}
               </span>
             </div>
             {session.session.ipAddress && (
               <div>
                 <span className="font-medium">IP:</span>
-                <code className="ml-2 text-xs bg-muted px-1 rounded">{session.session.ipAddress}</code>
+                <code className="ml-2 text-xs bg-muted px-1 rounded">
+                  {session.session.ipAddress}
+                </code>
               </div>
             )}
             {session.session.userAgent && (
